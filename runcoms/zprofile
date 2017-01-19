@@ -17,9 +17,9 @@ fi
 # Editors
 #
 
-export EDITOR='nano'
-export VISUAL='nano'
-export PAGER='less'
+export EDITOR='nvim'
+export VISUAL='nvim'
+export PAGER='vimpager'
 
 #
 # Language
@@ -44,6 +44,8 @@ typeset -gU cdpath fpath mailpath path
 # Set the list of directories that Zsh searches for programs.
 path=(
   /usr/local/{bin,sbin}
+  ~/bin
+  $GOPATH/bin
   $path
 )
 

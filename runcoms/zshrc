@@ -11,3 +11,18 @@ if [[ -s "${ZDOTDIR:-$HOME}/.zprezto/init.zsh" ]]; then
 fi
 
 # Customize to your needs...
+
+# base16-shell
+BASE16_SHELL=$HOME/.config/base16-shell/
+[ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
+
+alias rm='rm -f'
+alias ln='ln -s'
+alias eclipse='SWT_GTK3=0 eclipse'
+alias ix="curl -F 'f:1=<-' ix.io"
+alias halt='sudo halt'
+
+# xbps
+alias update='sudo xbps-install -Suy'
+alias list='xbps-query -Rs'
+alias get='sudo xbps-install'
