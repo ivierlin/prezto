@@ -12,17 +12,64 @@ fi
 
 # Customize to your needs...
 
+# fzf
+
+source "/usr/share/doc/fzf/key-bindings.zsh"
+
 # base16-shell
 BASE16_SHELL=$HOME/.config/base16-shell/
 [ -n "$PS1" ] && [ -s $BASE16_SHELL/profile_helper.sh ] && eval "$($BASE16_SHELL/profile_helper.sh)"
 
-alias rm='rm -f'
+function exportHexBase { 
+	eval $(awk '/^color[0-9][0-9]=/ {print $1}' $BASE16_SHELL/scripts/$BASE16_THEME.sh | sed 's/\///g') 
+	for c (BLACK RED GREEN YELLOW BLUE MAGENTA CYAN WHITE); do
+		eval $c=\$color0${i=0}
+		export $c
+		((i++))
+	done
+	for i in $(seq -w 0 21); do
+		unset color$i
+	done
+}
+
+exportHexBase
+
+function mktempfifo {
+	name=${1:-notify}
+	tmpdir=$(mktemp -d)
+	mkfifo -m 0600 $tmpdir/$name.fifo
+}
+
+alias cp='cp -r'
+alias rm='rm -r'
 alias ln='ln -s'
+alias ip='ip -c'
 alias eclipse='SWT_GTK3=0 eclipse'
+alias libreoffice='SWT_GTK3=0 libreoffice'
 alias ix="curl -F 'f:1=<-' ix.io"
+function ext-ip { curl http://ipecho.net/plain; echo; }
 alias halt='sudo halt'
+alias reboot='sudo reboot'
+
+alias bat='acpi -b'
+alias sue='sudoedit'
+alias win="$HOME/VM/windows"
 
 # xbps
-alias update='sudo xbps-install -Suy'
+function checkpkgs { read -t 3 -q "CHECKPKGS?[*] Checking packages for upstream updates (y/n) "; echo; [ ${CHECKPKGS:-n} = "y" ] && xcheckmypkgs; }
+alias update='sudo xbps-install -Suy && checkpkgs'
 alias list='xbps-query -Rs'
 alias get='sudo xbps-install'
+alias remove='sudo xbps-remove'
+
+function panel {
+	tmpdir=$(mktemp -d)
+	PANEL_TOP=$tmpdir/top.fifo
+	mkfifo $PANEL_TOP
+
+	export PANEL_TOP
+
+	tail -f $PANEL_TOP | xargs -I{} notify-send "{}" &
+}
+
+alias checknet='nc -z google.com 443 &> $PANEL_TOP'

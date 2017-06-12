@@ -9,4 +9,21 @@
 if [[ "$SHLVL" -eq 1 && ! -o LOGIN && -s "${ZDOTDIR:-$HOME}/.zprofile" ]]; then
   source "${ZDOTDIR:-$HOME}/.zprofile"
 fi
-export GOPATH="/home/go"
+
+
+export XDG_CONFIG_HOME="$HOME/.config"
+export XDG_CACHE_HOME="$HOME/.cache"
+export XDG_DATA_HOME="$HOME/.local/share"
+export XDG_RUNTIME_DIR="$HOME/.local/run"
+
+export XKB_DEFAULT_LAYOUT=us,de
+export XKB_DEFAULT_VARIANT=,nodeadkeys
+export XKB_DEFAULT_OPTIONS=grp:alt_shift_toggle
+
+export XBPS_DISTDIR="/usr/local/src/void-packages"
+
+export WEECHAT_HOME="$XDG_CONFIG_HOME/weechat"
+
+export GOPATH="/usr/local/src/go"
+
+export SHARED_DIR="/home/share"

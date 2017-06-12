@@ -18,6 +18,7 @@ fi
 #
 
 export EDITOR='nvim'
+export SUDO_EDITOR='nvim'
 export VISUAL='nvim'
 export PAGER='vimpager'
 
@@ -44,8 +45,7 @@ typeset -gU cdpath fpath mailpath path
 # Set the list of directories that Zsh searches for programs.
 path=(
   /usr/local/{bin,sbin}
-  ~/bin
-  $GOPATH/bin
+  $(go env GOPATH)/bin
   $path
 )
 
